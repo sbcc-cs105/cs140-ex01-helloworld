@@ -1,4 +1,4 @@
-// Copyright 2005, Google Inc.
+// Copyright 2018, Allan Knight.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -11,7 +11,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Allan Knight nor the names of other
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -27,85 +27,28 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// A sample program demonstrating using Google C++ testing framework.
+// A unit tester for EX01-HelloWorld in CS140 at Santa Barbara City College.
 //
-// Author: wan@google.com (Zhanyong Wan)
+// Author: ahknight@pipeline.sbcc.edu (Allan Knight)
 
 
-// This sample shows how to write a simple unit test for a function,
-// using Google C++ testing framework.
-//
-// Writing a unit test using Google C++ testing framework is easy as 1-2-3:
-
-
-// Step 1. Include necessary header files such that the stuff your
-// test logic needs is declared.
-//
-// Don't forget gtest.h, which declares the testing framework.
+// Includes for google test and the unit under test.
 
 #include <limits.h>
 #include "helloworld.h"
 #include "gtest/gtest.h"
 namespace {
 
-// Step 2. Use the TEST macro to define your tests.
-//
-// TEST has two parameters: the test case name and the test name.
-// After using the macro, you should define your test logic between a
-// pair of braces.  You can use a bunch of macros to indicate the
-// success or failure of a test.  EXPECT_TRUE and EXPECT_EQ are
-// examples of such macros.  For a complete list, see gtest.h.
-//
-// <TechnicalDetails>
-//
-// In Google Test, tests are grouped into test cases.  This is how we
-// keep test code organized.  You should put logically related tests
-// into the same test case.
-//
-// The test case name and the test name should both be valid C++
-// identifiers.  And you should not use underscore (_) in the names.
-//
-// Google Test guarantees that each test you define is run exactly
-// once, but it makes no guarantee on the order the tests are
-// executed.  Therefore, you should write your tests in such a way
-// that their results don't depend on their order.
-//
-// </TechnicalDetails>
+// Tests edu::sbcc:cs140::HelloWorld::greetWorld().
 
+using edu::sbcc::cs140::HelloWorld;
 
-// Tests Factorial().
-
-// Tests factorial of negative numbers.
-TEST(HelloWorldTest, Basic) {
-  // This test is named "Negative", and belongs to the "FactorialTest"
+// Tests returned string of greetWorld().
+TEST(HelloWorldTest, Positive) {
+  // This test is named "Positive", and belongs to the "HelloWorld"
   // test case.
   EXPECT_EQ("Hello, World!", HelloWorld::greetWorld());
 
-  // <TechnicalDetails>
-  //
-  // EXPECT_EQ(expected, actual) is the same as
-  //
-  //   EXPECT_TRUE((expected) == (actual))
-  //
-  // except that it will print both the expected value and the actual
-  // value when the assertion fails.  This is very helpful for
-  // debugging.  Therefore in this case EXPECT_EQ is preferred.
-  //
-  // On the other hand, EXPECT_TRUE accepts any Boolean expression,
-  // and is thus more general.
-  //
-  // </TechnicalDetails>
 }
 }  // namespace
 
-// Step 3. Call RUN_ALL_TESTS() in main().
-//
-// We do this by linking in src/gtest_main.cc file, which consists of
-// a main() function which calls RUN_ALL_TESTS() for us.
-//
-// This runs all the tests you've defined, prints the result, and
-// returns 0 if successful, or 1 otherwise.
-//
-// Did you notice that we didn't register the tests?  The
-// RUN_ALL_TESTS() macro magically knows about all the tests we
-// defined.  Isn't this convenient?
