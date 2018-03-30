@@ -16,6 +16,12 @@
 # Remember to tweak this if you move this file.
 GTEST_DIR = .
 
+SRC_EXT = cc
+HDR_EXT = h
+OBJ_EXT = o
+
+UNITTEST_SUFFIX = unittest
+
 # Where to find user code.
 USER_DIR = ./src
 INC_DIR = ./include
@@ -33,9 +39,18 @@ CXXFLAGS += -g -Wall -Wextra
 
 ASSIGNMENT = helloworld
 
+ASSIGNMENT_SRC = $(USER_DIR)/$(ASSIGNMENT).$(SRC_EXT)
+ASSIGNMENT_HDR = $(INC_DIR)/$(ASSIGNMENT).$(HDR_EXT)
+ASSIGNMENT_OBJ = $(BUILD_DIR)/$(ASSIGNMENT).$(OBJ_EXT)
+ASSIGNMENT_BIN = $(BIN_DIR)/$(ASSIGNMENT)
+
+TEST_SRC = $(USER_DIR)/$(ASSIGNMENT)_$(UNITTEST_SUFFIX).$(SRC_EXT)
+TEST_OBJ = $(BUILD_DIR)/$(ASSIGNMENT)_$(UNITTEST_SUFFIX).$(OBJ_EXT)
+TEST_BIN = $(BIN_DIR)/$(ASSIGNMENT)_$(UNITTEST_SUFFIX)
+
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = $(BIN_DIR)/$(ASSIGNMENT)_unittest
+TESTS = $(TEST_BIN)
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -44,10 +59,10 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 
 # House-keeping build targets.
 
-all : $(TESTS) $(BIN_DIR)/$(ASSIGNMENT)
+all : $(TESTS) $(ASSIGNMENT_BIN)
 
 clean :
-	rm -rf $(TESTS) $(ASSIGNMENT) output/ $(BIN_DIR) $(BUILD_DIR)
+	rm -rf $(TESTS) output/ $(BIN_DIR) $(BUILD_DIR)
 
 # Builds gtest.a and gtest_main.a.
 
@@ -55,30 +70,30 @@ clean :
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-$(BIN_DIR)/$(ASSIGNMENT) : $(BUILD_DIR)/$(ASSIGNMENT).o | bin build
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $(ASSIGNMENT) $^ -o $@
+$(ASSIGNMENT_BIN) : $(ASSIGNMENT_OBJ) | bin build
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
-assignment : $(BIN_DIR)/$(ASSIGNMENT)
+assignment : $(ASSIGNMENT_BIN)
 
-run : $(BIN_DIR)/$(ASSIGNMENT)
-	$(BIN_DIR)/$(ASSIGNMENT)
+run : $(ASSIGNMENT_BIN)
+	@$(ASSIGNMENT_BIN)
 
-$(BUILD_DIR)/$(ASSIGNMENT).o : $(USER_DIR)/$(ASSIGNMENT).cc $(INC_DIR)/$(ASSIGNMENT).h $(GTEST_HEADERS) | build
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/$(ASSIGNMENT).cc -o $@
+$(ASSIGNMENT_OBJ) : $(ASSIGNMENT_SRC) $(ASSIGNMENT_HDR) $(GTEST_HEADERS) | build
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/$(ASSIGNMENT)_unittest.o : $(USER_DIR)/$(ASSIGNMENT)_unittest.cc $(INC_DIR)/$(ASSIGNMENT).h $(GTEST_HEADERS) | build
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/$(ASSIGNMENT)_unittest.cc -o $@
+$(TEST_OBJ) : $(TEST_SRC) $(ASSIGNMENT_HEADER) $(GTEST_HEADERS) | build
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-$(BIN_DIR)/$(ASSIGNMENT)_unittest : $(BUILD_DIR)/$(ASSIGNMENT).o $(BUILD_DIR)/$(ASSIGNMENT)_unittest.o | bin build
+$(TEST_BIN) : $(ASSIGNMENT_OBJ) $(TEST_OBJ) | bin build
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -e__Z9test_mainiPPc -lpthread -lgtests -L$(LIB_DIR) $^ -o $@
 
-tester : $(BIN_DIR)/$(ASSIGNMENT)_unittest
+tester : $(TEST_BIN)
 
-test : $(BIN_DIR)/$(ASSIGNMENT)_unittest
-	$(BIN_DIR)/$(ASSIGNMENT)_unittest
+test : $(TEST_BIN)
+	@$(TEST_BIN)
 
 run_jenkins_tester : $(BIN_DIR)/$(ASSIGNMENT)_unittest
-	./$(ASSIGNMENT)_unittest --gtest_output=xml:output/result.xml
+	@$(TEST_BIN) --gtest_output=xml:output/result.xml
 
 bin:
 	-mkdir $(BIN_DIR) &2>/dev/null
