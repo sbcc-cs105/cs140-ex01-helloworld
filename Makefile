@@ -85,7 +85,7 @@ $(TEST_OBJ) : $(TEST_SRC) $(ASSIGNMENT_HEADER) $(GTEST_HEADERS) | build
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 $(TEST_BIN) : $(ASSIGNMENT_OBJ) $(TEST_OBJ) | bin build
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -e__Z9test_mainiPPc -lpthread -lgtests -L$(LIB_DIR) $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ -e__Z9test_mainiPPc -L$(LIB_DIR) -lpthread -lgtests 
 
 tester : $(TEST_BIN)
 
