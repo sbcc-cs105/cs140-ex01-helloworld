@@ -25,7 +25,7 @@ UNITTEST_SUFFIX = unittest
 # Where to find user code.
 USER_DIR = ./src
 INC_DIR = ./include
-LIB_DIR = ./lib
+LIB_DIR = ./lib/$(shell uname -s)
 BIN_DIR = ./bin
 BUILD_DIR = ./build
 
