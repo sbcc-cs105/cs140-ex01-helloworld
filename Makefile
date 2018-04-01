@@ -67,6 +67,11 @@ all : $(ASSIGNMENT_BIN) $(TESTS)
 clean :
 	rm -rf $(TESTS) output/ $(BIN_DIR) $(BUILD_DIR)
 
+# Set up git hooks
+./.git/hooks/pre-push: ./.githooks/pre-push
+	-@chmod a+x $<
+	-@ln -s -f ../../.githooks/pre-push $@
+	
 # Builds gtest.a and gtest_main.a.
 
 # Builds a sample test.  A test should link with either gtest.a or
