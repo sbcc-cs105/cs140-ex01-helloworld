@@ -51,6 +51,13 @@ TEST_SRC = $(USER_DIR)/$(ASSIGNMENT)_$(UNITTEST_SUFFIX).$(SRC_EXT)
 TEST_OBJ = $(BUILD_DIR)/$(ASSIGNMENT)_$(UNITTEST_SUFFIX).$(OBJ_EXT)
 TEST_BIN = $(BIN_DIR)/$(ASSIGNMENT)_$(UNITTEST_SUFFIX)
 
+GIT_HOOKS_DIR = ./.git/hooks
+LOCAL_GITHOOKS_DIR = ./.githooks
+PRE_PUSH_SCRIPT = pre-push
+
+GIT_PRE_PUSH_SCRIPT = $(GIT_HOOKS_DIR)/$(PRE_PUSH_SCRIPT)
+LOCAL_PRE_PUSH_SCRIPT = $(LOCAL_GITHOOKS_DIR)/$(PRE_PUSH_SCRIPT)
+
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
 TESTS = $(TEST_BIN)
@@ -62,16 +69,18 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 
 # House-keeping build targets.
 
-all : $(ASSIGNMENT_BIN) $(TESTS) 
+all : init $(ASSIGNMENT_BIN) $(TESTS) 
 
 clean :
 	rm -rf $(TESTS) output/ $(BIN_DIR) $(BUILD_DIR)
 
 # Set up git hooks
-./.git/hooks/pre-push: ./.githooks/pre-push
+$(GIT_PRE_PUSH_SCRIPT): $(LOCAL_PRE_PUSH_SCRIPT)
 	-@chmod a+x $<
-	-@ln -s -f ../../.githooks/pre-push $@
+	-@ln -s -f ../.$(LOCAL_GITHOOKS_DIR)/$(PRE_PUSH_SCRIPT) $@
 	
+init: $(GIT_PRE_PUSH_SCRIPT)
+
 # Builds gtest.a and gtest_main.a.
 
 # Builds a sample test.  A test should link with either gtest.a or
@@ -110,5 +119,5 @@ bin:
 build:
 	-mkdir $(BUILD_DIR) &2>/dev/null
 	
-.PHONY : assignment tester run test
+.PHONY : assignment tester run test init
 
