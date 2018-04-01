@@ -84,8 +84,8 @@ $(ASSIGNMENT_OBJ) : $(ASSIGNMENT_SRC) $(ASSIGNMENT_HDR) $(GTEST_HEADERS) | build
 $(TEST_OBJ) : $(TEST_SRC) $(ASSIGNMENT_HEADER) $(GTEST_HEADERS) | build
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-$(TEST_BIN) : $(ASSIGNMENT_OBJ) $(TEST_OBJ) | bin build
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ -e__Z9test_mainiPPc -L$(LIB_DIR) -lpthread -lgtests 
+$(TEST_BIN) : $(TEST_OBJ) $(ASSIGNMENT_OBJ) | bin build
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -Wl,--allow-multiple-definition -lgtests -lpthread $^ -o $@ -L$(LIB_DIR)
 
 tester : $(TEST_BIN)
 
