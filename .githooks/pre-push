@@ -9,6 +9,7 @@ JENKINS_ADMIN_USER = 'ahknight'
 JENKINS_ADMIN_TOKEN = '58dbffb6d983bca8e2ed5b2f0db218b2'
 JENKINS_HOST = '209.129.49.15:8080'
 JENKINS_BASE_URL = 'http://' + JENKINS_ADMIN_USER + ':' + JENKINS_ADMIN_TOKEN + '@' + JENKINS_HOST
+JENKINS_BUILD_TOKEN = 'sbcc-cs140-grace-hopper'
 
 BITBUCKET_HOST = '209.129.49.15:7990'
 BITBUCKET_BASE_URL = 'http://' + JENKINS_ADMIN_USER + ':' + BITBUCKET_HOST
@@ -36,6 +37,14 @@ def createJenkinsBuild(jobName, config, crumbKey, crumb):
 	newConfig = config.replace(ORIGINAL_BITBUCKET_URL, url).replace(ORIGINAL_BITBUCKET_FULL_URL, url)
 	response = requests.post(JENKINS_BASE_URL + '/createItem?name=' + jobName, data=newConfig, headers={crumbKey: crumb,'Content-Type': 'application/xml'})
 	return response.status_code
+	
+def startBuild(jobName, crumbKey, crumb):
+	jenkinsBuildUrl = JENKINS_BASE_URL + '/job/' + jobName + '/build?token=' + JENKINS_BUILD_TOKEN +'&delay=15sec'
+	response = requests.get(jenkinsBuildUrl, headers={crumbKey: crumb})
+	if response.status_code == 200 or response.status_code == 201:
+		print("Build for " + jobName + ' started')
+	else:
+		print("Build for " + jobName + ' failed to start: ' + response.request.url)	
 
 # Check if the student is trying to push to the original assignment repository 
 # instead of their forked repository.
@@ -64,4 +73,12 @@ if status != 200:
 			print ('Successfully created new build')
 		else:
 			print ('Not able to create new build')
+			sys.exit(1)
+	else:
+		print('Unable to find original build configuration')
+		sys.exit(1)
+
+
+# Kick off build, which should have a quiet period to allow this push to finish before starte the build
+startBuild(userJobName, key, crumb)
 
