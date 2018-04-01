@@ -4,4 +4,7 @@
  * The following are macros and other useful utilities for the CS 140 class at 
  * Santa Barbara City College. 
  */
+ 
+#include <cstdlib>
+
 #define UNUSED(x) x __attribute__((unused))

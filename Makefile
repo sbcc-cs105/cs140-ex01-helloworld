@@ -22,10 +22,12 @@ OBJ_EXT = o
 
 UNITTEST_SUFFIX = unittest
 
+OS_NAME = $(shell uname -s)
+
 # Where to find user code.
 USER_DIR = ./src
 INC_DIR = ./include
-LIB_DIR = ./lib/$(shell uname -s)
+LIB_DIR = ./lib/$(OS_NAME)
 BIN_DIR = ./bin
 BUILD_DIR = ./build
 
@@ -42,6 +44,7 @@ ASSIGNMENT = helloworld
 ASSIGNMENT_SRC = $(USER_DIR)/$(ASSIGNMENT).$(SRC_EXT)
 ASSIGNMENT_HDR = $(INC_DIR)/$(ASSIGNMENT).$(HDR_EXT)
 ASSIGNMENT_OBJ = $(BUILD_DIR)/$(ASSIGNMENT).$(OBJ_EXT)
+ASSIGNMENT_TEST_OBJ = $(BUILD_DIR)/$(ASSIGNMENT).test.$(OBJ_EXT)
 ASSIGNMENT_BIN = $(BIN_DIR)/$(ASSIGNMENT)
 
 TEST_SRC = $(USER_DIR)/$(ASSIGNMENT)_$(UNITTEST_SUFFIX).$(SRC_EXT)
@@ -59,7 +62,7 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 
 # House-keeping build targets.
 
-all : $(TESTS) $(ASSIGNMENT_BIN)
+all : $(ASSIGNMENT_BIN) $(TESTS) 
 
 clean :
 	rm -rf $(TESTS) output/ $(BIN_DIR) $(BUILD_DIR)
@@ -84,8 +87,9 @@ $(ASSIGNMENT_OBJ) : $(ASSIGNMENT_SRC) $(ASSIGNMENT_HDR) $(GTEST_HEADERS) | build
 $(TEST_OBJ) : $(TEST_SRC) $(ASSIGNMENT_HEADER) $(GTEST_HEADERS) | build
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-$(TEST_BIN) : $(TEST_OBJ) $(ASSIGNMENT_OBJ) | bin build
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -Wl,--allow-multiple-definition -lgtests -lpthread $^ -o $@ -L$(LIB_DIR)
+$(TEST_BIN) : $(TEST_OBJ) $(ASSIGNMENT_SRC) | bin build
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -Dmain=__main -c $(ASSIGNMENT_SRC) -o $(ASSIGNMENT_TEST_OBJ)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< $(ASSIGNMENT_TEST_OBJ) -o $@ -L$(LIB_DIR) -lgtests -lpthread 
 
 tester : $(TEST_BIN)
 
