@@ -14,7 +14,7 @@ target_compile_options(HelloWorldObj PRIVATE -Dmain=_main)
 include_directories(include/)
 
 link_directories(lib/${PLATFORM})
-link_libraries(gtests,pthread)
+link_libraries(gtests pthread)
 add_executable(HelloWorld_GTest src/helloworld_unittest.cc $<TARGET_OBJECTS:HelloWorldObj>)
 
 add_dependencies(HelloWorld_GTest HelloWorld)
