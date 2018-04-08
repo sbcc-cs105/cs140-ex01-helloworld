@@ -42,13 +42,47 @@ namespace {
 // Tests edu::sbcc:cs140::HelloWorld::greetWorld().
 
 using edu::sbcc::cs140::HelloWorld;
+using namespace ::testing_internal;
+
+class HelloWorldTest : public ::testing::Test {
+protected:
+    static const uint MAX_TESTED_SCORE = 5;
+    static const uint MAX_OVERALL_SCORE = 8;
+    static uint _testScore;
+
+protected:
+    static void TearDownTestCase() {
+      if (_testScore == MAX_TESTED_SCORE) {
+        std::cout << std::endl << "Your unit test score is "
+                               << _testScore << " out of "
+                               << MAX_TESTED_SCORE << std::endl;
+      } else {
+        std::cout << "Your unit test score is "
+                  << _testScore << " out of "
+                  << MAX_TESTED_SCORE << " ("<< (int)(_testScore - MAX_TESTED_SCORE)
+                  << ")" << std::endl;
+      }
+
+      uint difference = MAX_OVERALL_SCORE - MAX_TESTED_SCORE;
+      std::string correctedPoint = (difference == 1) ? "point" : "points";
+
+      std::cout << "The assignment is worth a total of " << MAX_OVERALL_SCORE
+                << " where the remainder of " << difference << " " << correctedPoint
+                << std::endl;
+      std::cout << "comes from grading related to documentation, algorithms, and other"
+                << std::endl;
+      std::cout << "criteria." << std::endl << std::endl;
+    }
+};
+
+uint HelloWorldTest::_testScore = 0;
 
 // Tests returned string of greetWorld().
-TEST(HelloWorldTest, Positive) {
+TEST_F(HelloWorldTest, Positive) {
   // This test is named "Positive", and belongs to the "HelloWorld"
   // test case.
-  EXPECT_EQ("Hello, World!", HelloWorld::greetWorld());
-
+  ASSERT_EQ("Hello, World!", HelloWorld::greetWorld());
+  _testScore += 5;
 }
 }  // namespace
 

@@ -17,4 +17,8 @@ link_directories(lib/${PLATFORM})
 link_libraries(gtests pthread)
 add_executable(HelloWorld_GTest src/helloworld_unittest.cc $<TARGET_OBJECTS:HelloWorldObj>)
 
-add_dependencies(HelloWorld_GTest HelloWorld)
+add_custom_command(OUTPUT ${CMAKE_HOME_DIRECTORY}/.git/hooks/pre-push COMMAND ln ARGS -s ../../.githooks/pre-push .git/hooks WORKING_DIRECTORY ${CMAKE_HOME_DIRECTORY})
+add_custom_target(pre-push-script ALL DEPENDS ${CMAKE_HOME_DIRECTORY}/.git/hooks/pre-push)
+
+add_dependencies(HelloWorld_GTest HelloWorldObj pre-push-script)
+add_dependencies(HelloWorld pre-push-script)
