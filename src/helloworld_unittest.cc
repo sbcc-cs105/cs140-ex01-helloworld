@@ -34,7 +34,7 @@
 
 // Includes for google test and the unit under test.
 
-#include <limits.h>
+#include <climits>
 #include "helloworld.h"
 #include "gtest/gtest.h"
 namespace {
@@ -63,12 +63,8 @@ protected:
                   << ")" << std::endl;
       }
 
-      uint difference = MAX_OVERALL_SCORE - MAX_TESTED_SCORE;
-      std::string correctedPoint = (difference == 1) ? "point" : "points";
-
       std::cout << "The assignment is worth a total of " << MAX_OVERALL_SCORE
-                << " where the remainder of " << difference << " " << correctedPoint
-                << std::endl;
+                << " where the remainder of 3 points" << std::endl;
       std::cout << "comes from grading related to documentation, algorithms, and other"
                 << std::endl;
       std::cout << "criteria." << std::endl << std::endl;
