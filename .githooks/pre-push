@@ -77,7 +77,7 @@ print("SBCC user name: " + username)
 
 # Grab the BitBucket user name from repository URL
 githubUser = re.search('github.com\/([^\/]+)\/.+\.git', url).group(1)
-userJobName = COURSE_NUM + '-' + ASSIGNMENT_NUM + '-' + githubUser + username
+userJobName = COURSE_NUM + '-' + ASSIGNMENT_NUM + '-' + githubUser + '-' + username
 
 # Check if there is already a build on Jenkins for this student's fork
 key, crumb = getCrumb()
