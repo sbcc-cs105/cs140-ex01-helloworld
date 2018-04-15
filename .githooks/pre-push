@@ -6,11 +6,14 @@ import re
 import requests
 import xml.etree.ElementTree as ET
 
+SBCC_EMAIL_DOMAIN = '@pipeline.sbcc.edu'
+
 JENKINS_ADMIN_USER = 'ahknight'
 JENKINS_ADMIN_TOKEN = '58dbffb6d983bca8e2ed5b2f0db218b2'
 JENKINS_HOST = '209.129.49.15:8080'
 JENKINS_BASE_URL = 'http://' + JENKINS_ADMIN_USER + ':' + JENKINS_ADMIN_TOKEN + '@' + JENKINS_HOST
 JENKINS_BUILD_TOKEN = 'sbcc-cs140-grace-hopper'
+JENKINS_DEFAULT_RECEPIENT = '\$DEFAULT_RECIPIENTS'
 
 BITBUCKET_HOST = '209.129.49.15:7990'
 BITBUCKET_BASE_URL = 'http://' + JENKINS_ADMIN_USER + ':' + BITBUCKET_HOST
@@ -35,7 +38,9 @@ def getJenkinsBuild(jobName, crumbKey, crumb):
 	return (response.status_code, response.text)
 
 def createJenkinsBuild(jobName, config, crumbKey, crumb):
+	email = os.open('git log -1 --format=format:%ae HEAD').read()
 	newConfig = config.replace(ORIGINAL_BITBUCKET_URL, url).replace(ORIGINAL_BITBUCKET_FULL_URL, url)
+	newConfig = newConfig.replace(JENKINS_DEFAULT_RECEPIENT, email + ' ' + JENKINS_DEFAULT_RECEPIENT)
 	response = requests.post(JENKINS_BASE_URL + '/createItem?name=' + jobName, data=newConfig, headers={crumbKey: crumb,'Content-Type': 'application/xml'})
 	return response.status_code
 	
