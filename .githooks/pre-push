@@ -76,8 +76,8 @@ username = 	emailMatch.group(1)
 print("SBCC user name: " + username)
 
 # Grab the BitBucket user name from repository URL
-bitbucketUser = re.search('github.com\/([^\/]+)\/.+\.git', url).group(1)
-userJobName = COURSE_NUM + '-' + ASSIGNMENT_NUM + '-' + bitbucketUser
+githubUser = re.search('github.com\/([^\/]+)\/.+\.git', url).group(1)
+userJobName = COURSE_NUM + '-' + ASSIGNMENT_NUM + '-' + githubUser + username
 
 # Check if there is already a build on Jenkins for this student's fork
 key, crumb = getCrumb()
@@ -85,7 +85,7 @@ key, crumb = getCrumb()
 status, body = getJenkinsBuild(userJobName, key, crumb)
 
 if status != 200:
-	print('Build not created yet, getting base build...');
+	print('Build not created yet, getting base build...')
 	status, buildConfig = getJenkinsBuild(ORIGINAL_JOB_NAME, key, crumb)
 	if status == 200:
 		print('Found original build configuration...')
