@@ -1,12 +1,12 @@
 /**
  * CS 140 Object-Oriented Programming Using C\+\+
- * CRN: [CHANGE THIS TO YOUR INFORMATION]
+ * CRN: My CRN
  * Assignment: HelloWorld
  *
  * Statement of code ownership: I hereby state that I have written all of this
  * code and I have not copied this code from any other person or source\.
  *
- * @author [CHANGE THIS TO YOUR INFORMATION]
+ * @author XorMasters
  */
 
 #include <iostream>
