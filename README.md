@@ -1,5 +1,5 @@
 ## Exercise: HelloWorld (8 Points)
-
+Th
 ```cpp
 #ifndef __EDU_SBCC_CS140__HELLOWORLD_H__
 #define __EDU_SBCC_CS140__HELLOWORLD_H__

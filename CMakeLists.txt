@@ -19,6 +19,8 @@ add_executable(HelloWorld_GTest src/helloworld_unittest.cc $<TARGET_OBJECTS:Hell
 
 add_custom_command(OUTPUT ${CMAKE_HOME_DIRECTORY}/.git/hooks/pre-push COMMAND ln ARGS -s ../../.githooks/pre-push .git/hooks WORKING_DIRECTORY ${CMAKE_HOME_DIRECTORY})
 add_custom_target(pre-push-script ALL DEPENDS ${CMAKE_HOME_DIRECTORY}/.git/hooks/pre-push)
+add_custom_command(OUTPUT ${CMAKE_HOME_DIRECTORY}/.git/hooks/pre-commit COMMAND ln ARGS -s ../../.githooks/pre-commit .git/hooks WORKING_DIRECTORY ${CMAKE_HOME_DIRECTORY})
+add_custom_target(pre-commit-script ALL DEPENDS ${CMAKE_HOME_DIRECTORY}/.git/hooks/pre-commit)
 
-add_dependencies(HelloWorld_GTest HelloWorldObj pre-push-script)
-add_dependencies(HelloWorld pre-push-script)
+add_dependencies(HelloWorld_GTest HelloWorldObj pre-push-script pre-commit-script)
+add_dependencies(HelloWorld pre-push-script pre-commit-script)
