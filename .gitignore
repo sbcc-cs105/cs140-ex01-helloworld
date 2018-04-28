@@ -49,3 +49,6 @@ cmake-build-debug/
 cmake_install.cmake
 *.cbp
 Makefile
+
+# CLion
+.idea
