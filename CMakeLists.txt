@@ -1,14 +1,21 @@
-cmake_minimum_required(VERSION 3.5)
-execute_process(COMMAND uname -s OUTPUT_VARIABLE PLATFORM OUTPUT_STRIP_TRAILING_WHITESPACE)
-
+cmake_minimum_required(VERSION 3.10)
 project (EX01-HelloWorld)
+
+execute_process(COMMAND uname -s OUTPUT_VARIABLE PLATFORM OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 set(EXECUTABLE_OUTPUT_PATH "bin/")
 
-add_executable(HelloWorld src/helloworld.cc include/helloworld.h)
+file(GLOB_RECURSE ASSIGNMENT_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "src/*.cc")
+file(GLOB_RECURSE ASSIGNMENT_INCLUDES RELATIVE ${CMAKE_SOURCE_DIR} "include/*.cc")
+
+MESSAGE("Sources: " ${ASSIGNMENT_SOURCES})
+MESSAGE("Includes: " ${ASSIGNMENT_INCLUDES})
+MESSAGE("Platform: " ${PLATFORM})
+
+add_executable(HelloWorld ${ASSIGNMENT_SOURCES} ${ASSIGNMENT_INCLUDES})
 include_directories(include/ cs140/include)
 
-add_library(HelloWorldObj OBJECT src/helloworld.cc)
+add_library(HelloWorldObj OBJECT ${ASSIGNMENT_SOURCES})
 target_compile_options(HelloWorldObj PRIVATE -Dmain=_main)
 
 link_directories(cs140/lib/${PLATFORM})
