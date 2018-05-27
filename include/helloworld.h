@@ -1,8 +1,0 @@
-//
-// Created by Knight, Allan on 5/26/18.
-//
-
-#ifndef EX01_HELLOWORLD_HELLOWORLD_H
-#define EX01_HELLOWORLD_HELLOWORLD_H
-
-#endif //EX01_HELLOWORLD_HELLOWORLD_H
