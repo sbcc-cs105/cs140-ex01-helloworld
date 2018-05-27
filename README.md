@@ -78,6 +78,7 @@ using edu::sbcc::cs140::HelloWorld;
 
 int main(UNUSED(int argc), UNUSED(char *argv[])) {
 	std::cout << HelloWorld::greetWorld() << std::endl;
+	return EXIT_SUCCESS;
 }
 ```
 ### Running the code for this project
