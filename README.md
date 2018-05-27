@@ -45,9 +45,8 @@ contents that may already be in the `helloworld.h` file.
 namespace edu { namespace sbcc { namespace cs140 {
 class HelloWorld {
 public:
-	static std::string greetWorld();
+    static std::string greetWorld();
 };
-
 }}}
 #endif // __EDU_SBCC_CS140__HELLOWORLD_H__
 ```
@@ -71,14 +70,14 @@ contents that may already be in the `helloworld.cc` file.
 #include "helloworld.h"
 
 std::string edu::sbcc::cs140::HelloWorld::greetWorld() {
-	return "Hello, World!";
+    return "Hello, World!";
 }
 
 using edu::sbcc::cs140::HelloWorld;
 
 int main(UNUSED(int argc), UNUSED(char *argv[])) {
-	std::cout << HelloWorld::greetWorld() << std::endl;
-	return EXIT_SUCCESS;
+    std::cout << HelloWorld::greetWorld() << std::endl;
+    return EXIT_SUCCESS;
 }
 ```
 ### Running the code for this project
