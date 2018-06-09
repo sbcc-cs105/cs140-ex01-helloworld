@@ -27,11 +27,17 @@ project and have it open in CLion. If you have not already done
 this, follow the instruction in the previous section.
 
 In CLion in the project explorer, right-click the `include` directory
-and chose `New => C++ Header File`. Under **Name** fill in 
-`helloworld`. CLion will add the `.h` extension for you,
+and chose `New => C++ Header File`. 
+
+![Adding header](https://github.com/sbcc-cs140-fall2018/Course-Information/wiki/images/01_include_file.png)
+
+Under **Name** fill in `helloworld`. CLion will add the `.h` extension for you,
 so there is no need to add it here. Press the **OK** button
 and you should see the file in the include directory in 
 the project explorer.
+
+![Adding include file](https://github.com/sbcc-cs140-fall2018/Course-Information/wiki/images/02_new_header_file.png)
+
 
 Copy and paste the following code into this file over any
 contents that may already be in the `helloworld.h` file.
@@ -53,7 +59,11 @@ public:
 #### helloworld.cc
 
 In CLion in the project explorer, right-click the `src` directory
-and chose `New => C++ Source File`. Under **Name** fill in
+and chose `New => C++ Source File`. 
+
+![Adding source file](https://github.com/sbcc-cs140-fall2018/Course-Information/wiki/images/03_new_source_file.png)
+
+Under **Name** fill in
 helloworld. CLion will add the extension, but by default 
 adds the `.cpp` extension. All projects in this class will
 use the `.cc` extension. Select `.cc` in the **Type** drop-down
