@@ -35,19 +35,20 @@
 // Includes for google test and the unit under test.
 
 #include <climits>
-#include "helloworld.h"
+#include <fstream>
+
 #include "gtest/gtest.h"
+
 namespace {
 
 // Tests edu::sbcc:cs140::HelloWorld::greetWorld().
 
-using edu::sbcc::cs140::HelloWorld;
 using namespace ::testing_internal;
 
 class HelloWorldTest : public ::testing::Test {
 protected:
-    static const uint MAX_TESTED_SCORE = 5;
-    static const uint MAX_OVERALL_SCORE = 8;
+    static const uint MAX_TESTED_SCORE = 20;
+    static const uint MAX_OVERALL_SCORE = 25;
     static uint _testScore;
 
 protected:
@@ -64,7 +65,7 @@ protected:
       }
 
       std::cout << "The assignment is worth a total of " << MAX_OVERALL_SCORE
-                << " where the remainder of 3 points" << std::endl;
+                << " where the remainder of 5 points" << std::endl;
       std::cout << "comes from grading related to documentation, algorithms, and other"
                 << std::endl;
       std::cout << "criteria." << std::endl << std::endl;
@@ -77,8 +78,14 @@ uint HelloWorldTest::_testScore = 0;
 TEST_F(HelloWorldTest, Positive) {
   // This test is named "Positive", and belongs to the "HelloWorld"
   // test case.
-  ASSERT_EQ("Hello, World!", HelloWorld::greetWorld());
-  _testScore += 5;
+
+  std::system("./HelloWorld > ./test.txt");
+  char buf[14];
+  std::ifstream("./test.txt").rdbuf()->sgetn(buf, 14);
+  ASSERT_STREQ("Hello, World!\n", buf);
+
+  _testScore += 20;
 }
+
 }  // namespace
 
