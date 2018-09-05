@@ -35,6 +35,7 @@
 // Includes for google test and the unit under test.
 
 #include <climits>
+#include <cstdint>
 #include <fstream>
 
 #include "gtest/gtest.h"
@@ -43,49 +44,52 @@ namespace {
 
 // Tests edu::sbcc:cs140::HelloWorld::greetWorld().
 
-using namespace ::testing_internal;
+    using namespace ::testing_internal;
 
-class HelloWorldTest : public ::testing::Test {
-protected:
-    static const uint MAX_TESTED_SCORE = 20;
-    static const uint MAX_OVERALL_SCORE = 25;
-    static uint _testScore;
+    class HelloWorldTest : public ::testing::Test {
+    protected:
+        static const uint64_t MAX_TESTED_SCORE = 20;
+        static const uint64_t MAX_OVERALL_SCORE = 25;
+        static uint64_t _testScore;
 
-protected:
-    static void TearDownTestCase() {
-      if (_testScore == MAX_TESTED_SCORE) {
-        std::cout << std::endl << "Your unit test score is "
-                               << _testScore << " out of "
-                               << MAX_TESTED_SCORE << std::endl;
-      } else {
-        std::cout << "Your unit test score is "
-                  << _testScore << " out of "
-                  << MAX_TESTED_SCORE << " ("<< (int)(_testScore - MAX_TESTED_SCORE)
-                  << ")" << std::endl;
-      }
+    protected:
+        static void TearDownTestCase() {
+            if (_testScore == MAX_TESTED_SCORE) {
+                std::cout << std::endl << "Your unit test score is "
+                          << _testScore << " out of "
+                          << MAX_TESTED_SCORE << std::endl;
+            } else {
+                std::cout << "Your unit test score is "
+                          << _testScore << " out of "
+                          << MAX_TESTED_SCORE << " ("<< (int)(_testScore - MAX_TESTED_SCORE)
+                          << ")" << std::endl;
+            }
 
-      std::cout << "The assignment is worth a total of " << MAX_OVERALL_SCORE
-                << " where the remainder of 5 points" << std::endl;
-      std::cout << "comes from grading related to documentation, algorithms, and other"
-                << std::endl;
-      std::cout << "criteria." << std::endl << std::endl;
-    }
-};
+            std::cout << "The assignment is worth a total of " << MAX_OVERALL_SCORE
+                      << " where the remainder of 5 points" << std::endl;
+            std::cout << "comes from grading related to documentation, algorithms, and other"
+                      << std::endl;
+            std::cout << "criteria." << std::endl << std::endl;
+        }
+    };
 
-uint HelloWorldTest::_testScore = 0;
+    uint64_t HelloWorldTest::_testScore = 0;
 
 // Tests returned string of greetWorld().
-TEST_F(HelloWorldTest, Positive) {
-  // This test is named "Positive", and belongs to the "HelloWorld"
-  // test case.
+    TEST_F(HelloWorldTest, Positive) {
+    // This test is named "Positive", and belongs to the "HelloWorld"
+    // test case.
 
-  std::system("./HelloWorld > ./test.txt");
-  char buf[14];
-  std::ifstream("./test.txt").rdbuf()->sgetn(buf, 14);
-  ASSERT_STREQ("Hello, World!\n", buf);
+#ifdef WIN32
+    std::system("HelloWorld > ./test.txt");
+#else
+    std::system("./HelloWorld > ./test.txt");
+#endif
+    char buf[] = { '\0','\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0', '\0', '\0' };
+    std::ifstream("./test.txt").rdbuf()->sgetn(buf, 14);
+    ASSERT_STREQ("Hello, World!\n", buf);
 
-  _testScore += 20;
+    _testScore += 20;
 }
 
 }  // namespace
-
