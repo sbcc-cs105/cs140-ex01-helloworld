@@ -4,13 +4,13 @@ The objective of this project is to familiarize yourself with
 CLion, the Integrated Development Environment (IDE) we use for 
 this class, and the workflow using Git and GitHub.
 
-The first thing you will need to do is fork and clone this assignment
-from GitHub. Follow the instructions 
-[here](https://github.com/sbcc-cs140-fall2018/Course-Information/wiki)
+The first thing you will need to do is accept the invitation to this assignment
+from GitHub Classroom. You can click [here](https://classroom.github.com/a/Qxkh__cV) to accept the invitatiion, and then
+follow the instructions [here](https://github.com/sbcc-cs140/Course-Information/wiki)
 to get started. 
 
-Be sure that you fork the project first and use the URL from
-the forked project when you clone it in CLion.
+Be sure that you accept the invitation first and use the URL from
+the your new project when you clone it in CLion.
 
 ### Writing the code for this Project
 
@@ -25,7 +25,7 @@ and then copy the content into the files.
 In CLion in the project explorer, right-click the `src` directory
 and chose `New => C++ Source File`. 
 
-![Adding source file](https://github.com/sbcc-cs140-fall2018/Course-Information/wiki/images/03_new_source_file.png)
+![Adding source file](https://github.com/sbcc-cs140/Course-Information/wiki/images/03_new_source_file.png)
 
 Under **Name** fill in
 helloworld. CLion will add the extension, but by default 
@@ -39,8 +39,7 @@ contents that may already be in the `main.cc` file.
 
 ```cpp
 /**
- * CS 140 Object-Oriented Programming Using C++
- * CRN: [CHANGE THIS INFORMATION]
+ * CS 140 Object-Oriented Programming in C++
  * Assignment: EX01-HelloWorld
  *
  * Statement of code ownership: I hereby state that I have written all of this
@@ -50,9 +49,9 @@ contents that may already be in the `main.cc` file.
  */
  
 #include <iostream>
-#include <cs140>
+#include <csv13>
 
-int main(UNUSED(int argc), UNUSED(char *argv[])) {
+int main(int argc, char *argv[]) {
     std::cout << "Hello, World!" << std::endl;
     return EXIT_SUCCESS;
 }
@@ -67,7 +66,7 @@ In the **Run** view below the code you should see the output
 of running the program. It should look something like this:
 
 ```bash
-/Users/username/githubusername/cs140-ex01-helloworld/cmake-build-debug/bin/HelloWorld
+/Users/username/githubusername/ex01-helloworld/cmake-build-debug/bin/HelloWorld
 Hello, World!
 
 Process finished with exit code 0
@@ -105,22 +104,16 @@ criteria.
 Process finished with exit code 0
 ```
 
-Remember, red good, green bad. If your tests pass you should see green
-text and your code ran fine. You should also see your score for this
-assignment minus code styling points which I will add later.
-
 ### Submitting the code for this project
 
-At the bottom of CLion there should be a view tab labeled **Version Control**.
-Select this tab at the bottom of the screen. You should see a tab called **Local Changes**.
-Under **Unversion Files** you should have one file: `main.cc`.
-Select these files and right-click on them. In the drop-down menu
-select **Add to VCS**. Next, right-click on these files again, which should
-now be under **Default** and select **Commit**. Add the appropriate
-commit message and click **OK**. Finally, right click on the committed files,
-select `Git -> Repository -> Push...`. Follow the onscreen directions
-and press **OK**. This step will run the tests again, check that everything is OK
-and then submit them to the cloud to have the tests run for grading.
+Before submitting your code the first time, you will need to add a webhook to this project to trigger the build in the cloud. This process is simple, and only required once per assignment. First, go to the **Settings** tab at the top of this page. It's right next to **Insights**. Then along the left side select **Webhooks**. On the Webhooks page click **Add Webhook** and copy http://209.129.49.16:8080/github-webhook/ into the **Payload URL** input box and then click **Add Webhook**. That's it. Every time you push code now, a new build will test your latest changes. The results are pasted to the #build channel in slack.
+
+First, right click on the project name, then select `Git -> Commit Directory...`. 
+Make sure only the files you want to push are selected, `main.cc`. Then uncheck `Perform code analysis` and `Check TODO`. It's OK to leave them checked, but committing will take longer. Leave `Run git hooks` unchecked as well. Put a message in `Commit Message` and then press the **Commit** button. If anything goes wrong check the _Version Control_ view
+in the lower left corner and select the _Console_ tab.
+ 
+Finally, right click on the project name, then select `Git -> Repository -> Push...`. Follow the onscreen directions
+and press **OK**. This step will then submit them to the cloud to have the tests run for grading.
 
 If you do not understand these directions, or wish to do them on the command
-line rather than in CLion, then read these [directions](https://github.com/sbcc-cs140-fall2018/Course-Information/wiki/How-to-Turn-In-Every-Project).
+line rather than in CLion, then read these [directions](https://github.com/sbcc-cs140/Course-Information/wiki/How-to-Turn-In-Every-Project).
