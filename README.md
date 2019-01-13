@@ -5,7 +5,7 @@ CLion, the Integrated Development Environment (IDE) we use for
 this class, and the workflow using Git and GitHub.
 
 The first thing you will need to do is accept the invitation to this assignment
-from GitHub Classroom. You can click [here](https://classroom.github.com/a/Qxkh__cV) to accept the invitatiion, and then
+from GitHub Classroom. You can click [here](https://classroom.github.com/a/ZZ9usIIM) to accept the invitatiion, and then
 follow the instructions [here](https://github.com/sbcc-cs140/Course-Information/wiki)
 to get started. 
 
