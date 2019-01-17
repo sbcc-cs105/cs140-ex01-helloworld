@@ -28,7 +28,7 @@ and chose `New => C++ Source File`.
 ![Adding source file](https://github.com/sbcc-cs140/Course-Information/wiki/images/03_new_source_file.png)
 
 Under **Name** fill in
-helloworld. CLion will add the extension, but by default 
+main. CLion will add the extension, but by default 
 adds the `.cpp` extension. All projects in this class will
 use the `.cc` extension. Select `.cc` in the **Type** drop-down
 and press **OK**. You should now see the file `main.cc` in
